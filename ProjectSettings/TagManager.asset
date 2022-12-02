@@ -6,6 +6,7 @@ TagManager:
   tags:
   - pasto
   - cambioEscenario
+  - planta
   layers:
   - Default
   - TransparentFX
