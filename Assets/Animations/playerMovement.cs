@@ -42,7 +42,7 @@ public class playerMovement : MonoBehaviour
             }
             else if (escena.name == "segundaEscena")
             {
-                SceneManager.LoadScene("terceraEscena");
+                SceneManager.LoadScene("ultimaEscena");
             }
 
         }
