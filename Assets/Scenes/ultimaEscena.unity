@@ -14169,9 +14169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e216e04a3364e83bd0cbe26fb22296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 7
+  runSpeed: 3
   rotationSpeed: 250
   animator: {fileID: 2091856005}
+  estoyAtacando: 0
+  impulsoDeGolpe: 10
 --- !u!136 &2091856003
 CapsuleCollider:
   m_ObjectHideFlags: 0

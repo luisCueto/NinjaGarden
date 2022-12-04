@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
-    public float runSpeed = 7;
+    public float runSpeed = 3;
     public float rotationSpeed = 250;
     public Animator animator;
     private float x, y;
+
+    public bool estoyAtacando;
+    public float impulsoDeGolpe = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +27,23 @@ public class playerMovement : MonoBehaviour
         transform.Rotate(0, x * Time.deltaTime * rotationSpeed, 0);
         transform.Translate(0, 0, y * Time.deltaTime * runSpeed);
 
+        if (Input.GetKeyDown(KeyCode.Return) && !estoyAtacando)
+        {
+            animator.SetTrigger("golpeo");
+            estoyAtacando = true;
+        }
+
         animator.SetFloat("velX", x);
         animator.SetFloat("velY", y);
+    }
+
+    private void FixedUpdate()
+    {
+        if (!estoyAtacando)
+        {
+            transform.Rotate(0, x * Time.deltaTime * rotationSpeed, 0);
+            transform.Translate(0, 0, y * Time.deltaTime * runSpeed);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,5 +64,10 @@ public class playerMovement : MonoBehaviour
             }
 
         }
+    }
+
+    public void dejeGolpear()
+    {
+        estoyAtacando = false;
     }
 }

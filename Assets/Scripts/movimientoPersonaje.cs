@@ -14,6 +14,7 @@ public class movimientoPersonaje : MonoBehaviour
 
     public Animator animator;
     private float x, y;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class movimientoPersonaje : MonoBehaviour
     {
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
+
 
         transform.Rotate(0, x * Time.deltaTime * rotationSpeed, 0);
         transform.Translate(0, 0, y * Time.deltaTime * runSpeed);
@@ -50,5 +52,6 @@ public class movimientoPersonaje : MonoBehaviour
 
         }
     }
+
         
 }
