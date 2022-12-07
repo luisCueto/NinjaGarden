@@ -7,11 +7,12 @@ TagManager:
   - pasto
   - cambioEscenario
   - planta
+  - katanaPlayer
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

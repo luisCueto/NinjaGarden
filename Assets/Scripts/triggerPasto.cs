@@ -54,7 +54,6 @@ public class triggerPasto : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.name);
         if(other.tag == "planta")
         {
             personaje.transform.position = new Vector3(planta.transform.position.x, 0.5f, planta.transform.position.z);

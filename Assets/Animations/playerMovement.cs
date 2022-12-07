@@ -13,10 +13,12 @@ public class playerMovement : MonoBehaviour
     public bool estoyAtacando;
     public float impulsoDeGolpe = 10f;
 
+    public BoxCollider colliderArma;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        desactivarColliderArma();
     }
 
     // Update is called once per frame
@@ -27,7 +29,7 @@ public class playerMovement : MonoBehaviour
         transform.Rotate(0, x * Time.deltaTime * rotationSpeed, 0);
         transform.Translate(0, 0, y * Time.deltaTime * runSpeed);
 
-        if (Input.GetKeyDown(KeyCode.Return) && !estoyAtacando)
+        if (Input.GetKeyDown(KeyCode.H) && !estoyAtacando)
         {
             animator.SetTrigger("golpeo");
             estoyAtacando = true;
@@ -69,5 +71,14 @@ public class playerMovement : MonoBehaviour
     public void dejeGolpear()
     {
         estoyAtacando = false;
+    }
+
+    public void activarColliderArma()
+    {
+        colliderArma.enabled = true;
+    }
+    public void desactivarColliderArma()
+    {
+        colliderArma.enabled = false;
     }
 }
