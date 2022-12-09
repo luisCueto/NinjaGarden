@@ -9,14 +9,22 @@ public class logicaEnemigo : MonoBehaviour
     public int dañoArma = 1;
     public Animator anim;
 
-    public float rangoDeAlerta;
-    public LayerMask capaDelJugador;
     [SerializeField]
-    bool alerta;
+    float rangoDeAlerta;
+
+    /*public LayerMask capaDelJugador;
+    [SerializeField]
+    bool alerta;*/
     [SerializeField]
     GameObject jugador;
     [SerializeField]
     float velocidadMovimiento;
+
+    public bool atacando;
+    public bool impacto=false;
+
+    [SerializeField]
+    Collider colliderArma;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +36,27 @@ public class logicaEnemigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Vector3.Distance(transform.position, jugador.transform.position) <= rangoDeAlerta && !atacando && !impacto)
+        {
+            var mirarPos = jugador.transform.position - transform.position;
+            mirarPos.y = 0;
+            var rotacion = Quaternion.LookRotation(mirarPos);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacion, 2);
+            anim.SetBool("caminar", true);
+
+            transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+
+            anim.SetBool("atacar", false);
+        }
+        if(Vector3.Distance(transform.position, jugador.transform.position) < 1.5 && !impacto)
+        {
+            anim.SetBool("caminar", false);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(jugador.transform.position-transform.position), 2);
+            anim.SetBool("atacar", true);
+            atacando = true;
+        }
+
+        /*
         alerta = Physics.CheckSphere(transform.position, rangoDeAlerta, capaDelJugador);
         Vector3 posicJugador = new Vector3(jugador.position.x, transform.position.y, jugador.position.z);
 
@@ -45,9 +74,24 @@ public class logicaEnemigo : MonoBehaviour
             posicJugador = 
             anim.SetBool("walk", false);
             anim.SetBool("atacar", true);
-        }
+        }*/
 
         
+    }
+
+    public void finalAnim()
+    {
+        anim.SetBool("atacar", false);
+        atacando = false;
+    }
+
+    public void activarColliderArma()
+    {
+        colliderArma.enabled = true;
+    }
+    public void desactivarColliderArma()
+    {
+        colliderArma.enabled = false;
     }
 
     private void OnDrawGizmos()
@@ -57,11 +101,14 @@ public class logicaEnemigo : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    { 
-
+    {
+        
         if (other.gameObject.tag == "katanaPlayer")
         {
-            Debug.Log(other.gameObject.tag);
+            //finalAnim();
+            //impacto = true;
+            //anim.SetBool("impacto", true);
+            Debug.Log("impresion: " + other.gameObject.tag);
             hp -= dañoArma;
             
 

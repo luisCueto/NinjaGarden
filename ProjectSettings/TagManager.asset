@@ -8,6 +8,7 @@ TagManager:
   - cambioEscenario
   - planta
   - katanaPlayer
+  - katanaEnemy
   layers:
   - Default
   - TransparentFX

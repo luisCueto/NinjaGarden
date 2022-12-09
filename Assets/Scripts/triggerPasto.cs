@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class triggerPasto : MonoBehaviour
 {
@@ -11,10 +12,16 @@ public class triggerPasto : MonoBehaviour
     GameObject personaje;
     [SerializeField]
     GameObject planta;
+
+    public float vidaActual;
+    public float vidaMax;
+    [SerializeField]
+    Image barraVida;
     // Start is called before the first frame update
     void Start()
     {
-        
+        vidaMax = 100;
+        StopAllCoroutines();
     }
 
     // Update is called once per frame
@@ -48,6 +55,11 @@ public class triggerPasto : MonoBehaviour
         {
             planta.transform.position = new Vector3(personaje.transform.position.x, 0, personaje.transform.position.z);
             personaje.transform.position = new Vector3(planta.transform.position.x, -2, planta.transform.position.z);
+
+            /*vidaActual = barraVida.fillAmount * 100;
+            vidaActual += 10 * Time.deltaTime;
+            barraVida.fillAmount = vidaActual / vidaMax;*/
+            StartCoroutine(corrutinaVida());
         }
         
     }
@@ -60,5 +72,17 @@ public class triggerPasto : MonoBehaviour
             planta.transform.position = new Vector3(personaje.transform.position.x, -2, personaje.transform.position.z);
         }
         
+    }
+
+    IEnumerator corrutinaVida()
+    {
+        vidaActual = barraVida.fillAmount * 100;
+        Debug.Log(vidaActual);
+        while (vidaActual < 100)
+        {
+            vidaActual += 10;
+            barraVida.fillAmount = vidaActual / vidaMax;
+            yield return new WaitForSeconds(1.5f);
+        }
     }
 }

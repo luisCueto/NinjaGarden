@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class playerMovement : MonoBehaviour
 {
@@ -15,10 +16,17 @@ public class playerMovement : MonoBehaviour
 
     public BoxCollider colliderArma;
 
+    [SerializeField]
+    Image barraVida;
+
+    public float vidaActual;
+    public float vidaMax;
+
     // Start is called before the first frame update
     void Start()
     {
         desactivarColliderArma();
+        vidaActual = vidaMax;
     }
 
     // Update is called once per frame
@@ -37,6 +45,9 @@ public class playerMovement : MonoBehaviour
 
         animator.SetFloat("velX", x);
         animator.SetFloat("velY", y);
+
+        vidaActual = barraVida.fillAmount * 100;
+
     }
 
     private void FixedUpdate()
@@ -66,6 +77,17 @@ public class playerMovement : MonoBehaviour
             }
 
         }
+        if (other.gameObject.tag == "katanaEnemy")
+        {
+            //Debug.Log("daño");
+            vidaActual -= 20;
+            barraVida.fillAmount = vidaActual / vidaMax;
+            Debug.Log("vidaAct: " + vidaActual);
+            if (vidaActual == 0)
+            {
+                SceneManager.LoadScene("gameOver");
+            }
+        }
     }
 
     public void dejeGolpear()
@@ -80,5 +102,14 @@ public class playerMovement : MonoBehaviour
     public void desactivarColliderArma()
     {
         colliderArma.enabled = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("katanaEnemy"))
+        {
+            
+            
+        }
     }
 }
