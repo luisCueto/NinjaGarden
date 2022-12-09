@@ -83,11 +83,11 @@ public class playerMovement : MonoBehaviour
         }
         if (other.gameObject.tag == "katanaEnemy")
         {
-            vidaActual -= 10;
+            vidaActual -= 15;
             //Debug.Log("daño"); 
             barraVida.fillAmount = vidaActual / vidaMax;
             Debug.Log("vidaAct: " + vidaActual);
-            if (vidaActual == 0)
+            if (vidaActual <= 0)
             {
                 SceneManager.LoadScene("gameOver");
             }
@@ -98,7 +98,7 @@ public class playerMovement : MonoBehaviour
             //Debug.Log("daño"); 
             barraVida.fillAmount = vidaActual / vidaMax;
             Debug.Log("vidaAct: " + vidaActual);
-            if (vidaActual == 0)
+            if (vidaActual <= 0)
             {
                 SceneManager.LoadScene("gameOver");
             }
