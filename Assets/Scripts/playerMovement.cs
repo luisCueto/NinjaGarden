@@ -22,11 +22,16 @@ public class playerMovement : MonoBehaviour
     public float vidaActual;
     public float vidaMax;
 
+    public static bool tengoLlave;
+    public static bool paseSegundaEscena;
+
     // Start is called before the first frame update
     void Start()
     {
         desactivarColliderArma();
         vidaActual = vidaMax;
+        tengoLlave = false;
+        paseSegundaEscena = false;
     }
 
     // Update is called once per frame
@@ -47,7 +52,6 @@ public class playerMovement : MonoBehaviour
         animator.SetFloat("velY", y);
 
         vidaActual = barraVida.fillAmount * 100;
-
     }
 
     private void FixedUpdate()
@@ -67,11 +71,11 @@ public class playerMovement : MonoBehaviour
             Scene escena = SceneManager.GetActiveScene();
             Debug.Log(escena.name);
 
-            if (escena.name == "primerEscenario")
+            if (escena.name == "primerEscenario" && paseSegundaEscena)
             {
                 SceneManager.LoadScene("segundaEscena");
             }
-            else if (escena.name == "segundaEscena")
+            else if (escena.name == "segundaEscena" && tengoLlave)
             {
                 SceneManager.LoadScene("ultimaEscena");
             }
@@ -79,8 +83,19 @@ public class playerMovement : MonoBehaviour
         }
         if (other.gameObject.tag == "katanaEnemy")
         {
-            //Debug.Log("daño");
-            vidaActual -= 20;
+            vidaActual -= 10;
+            //Debug.Log("daño"); 
+            barraVida.fillAmount = vidaActual / vidaMax;
+            Debug.Log("vidaAct: " + vidaActual);
+            if (vidaActual == 0)
+            {
+                SceneManager.LoadScene("gameOver");
+            }
+        }
+        if(other.gameObject.tag == "katanaBOSS")
+        {
+            vidaActual -= 30;
+            //Debug.Log("daño"); 
             barraVida.fillAmount = vidaActual / vidaMax;
             Debug.Log("vidaAct: " + vidaActual);
             if (vidaActual == 0)
@@ -102,14 +117,5 @@ public class playerMovement : MonoBehaviour
     public void desactivarColliderArma()
     {
         colliderArma.enabled = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag.Equals("katanaEnemy"))
-        {
-            
-            
-        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class logicaEnemigo : MonoBehaviour
 {
@@ -26,11 +27,21 @@ public class logicaEnemigo : MonoBehaviour
     [SerializeField]
     Collider colliderArma;
 
+    [SerializeField]
+    GameObject llave;
+    [SerializeField]
+    GameObject guardiaBOSS;
+
+    int contador;
+
     // Start is called before the first frame update
     void Start()
     {
+        contador = 0;
         anim = GetComponent<Animator>();
         jugador = GameObject.Find("ma");
+        guardiaBOSS = GameObject.Find("guardiaBOSS");
+        llave.SetActive(false);
     }
 
     // Update is called once per frame
@@ -76,6 +87,11 @@ public class logicaEnemigo : MonoBehaviour
             anim.SetBool("atacar", true);
         }*/
 
+        if (gameObject.name == "guardiaBOSS")
+        {
+            llave.transform.position = guardiaBOSS.transform.position;
+        }
+        
         
     }
 
@@ -111,9 +127,18 @@ public class logicaEnemigo : MonoBehaviour
             Debug.Log("impresion: " + other.gameObject.tag);
             hp -= dañoArma;
             
-
             if (hp <= 0)
-            {
+            { 
+                Debug.Log(gameObject.name);
+                if (gameObject.name == "guardiaBOSS")
+                {
+                    llave.SetActive(true);
+                }
+                if(gameObject.name == "BOSS")
+                {
+                    SceneManager.LoadScene("final");
+                }
+                primeraEscenaObjetivo.contador += 1;
                 Destroy(gameObject);
             }
         }

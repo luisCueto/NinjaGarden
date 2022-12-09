@@ -9,6 +9,8 @@ TagManager:
   - planta
   - katanaPlayer
   - katanaEnemy
+  - boss
+  - katanaBOSS
   layers:
   - Default
   - TransparentFX

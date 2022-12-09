@@ -54,7 +54,7 @@ public class triggerPasto : MonoBehaviour
         if (other.tag == "Player")
         {
             planta.transform.position = new Vector3(personaje.transform.position.x, 0, personaje.transform.position.z);
-            personaje.transform.position = new Vector3(planta.transform.position.x, -2, planta.transform.position.z);
+            personaje.transform.position = new Vector3(planta.transform.position.x, -200, planta.transform.position.z);
 
             /*vidaActual = barraVida.fillAmount * 100;
             vidaActual += 10 * Time.deltaTime;
@@ -68,8 +68,8 @@ public class triggerPasto : MonoBehaviour
     {
         if(other.tag == "planta")
         {
-            personaje.transform.position = new Vector3(planta.transform.position.x, 0.5f, planta.transform.position.z);
-            planta.transform.position = new Vector3(personaje.transform.position.x, -2, personaje.transform.position.z);
+            personaje.transform.position = new Vector3(planta.transform.position.x, 0, planta.transform.position.z);
+            planta.transform.position = new Vector3(personaje.transform.position.x, -200, personaje.transform.position.z);
         }
         
     }
@@ -80,9 +80,10 @@ public class triggerPasto : MonoBehaviour
         Debug.Log(vidaActual);
         while (vidaActual < 100)
         {
+            yield return new WaitForSeconds(1.5f);
             vidaActual += 10;
             barraVida.fillAmount = vidaActual / vidaMax;
-            yield return new WaitForSeconds(1.5f);
+            
         }
     }
 }
