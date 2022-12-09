@@ -14,27 +14,40 @@ public class logicaEnemigo : MonoBehaviour
     [SerializeField]
     bool alerta;
     [SerializeField]
-    Transform jugador;
+    GameObject jugador;
     [SerializeField]
     float velocidadMovimiento;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        anim = GetComponent<Animator>();
+        jugador = GameObject.Find("ma");
     }
 
     // Update is called once per frame
     void Update()
     {
         alerta = Physics.CheckSphere(transform.position, rangoDeAlerta, capaDelJugador);
+        Vector3 posicJugador = new Vector3(jugador.position.x, transform.position.y, jugador.position.z);
 
         if (alerta)
         {
-            Vector3 posicJugador = new Vector3(jugador.position.x, transform.position.y, jugador.position.z);
+            
             transform.LookAt(posicJugador);
             transform.position = Vector3.MoveTowards(transform.position, posicJugador, velocidadMovimiento*Time.deltaTime);
+            anim.SetBool("walk", true);
+            Debug.Log(Vector3.Distance(transform.position, jugador.position));
         }
+
+        if(Vector3.Distance(transform.position, jugador.position) < 1f)
+        {
+            posicJugador = 
+            anim.SetBool("walk", false);
+            anim.SetBool("atacar", true);
+        }
+
+        
     }
 
     private void OnDrawGizmos()
